@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<#include "head.html"/>
+<script type="text/javascript" src="//img05.moulingtao.net/wssbsw/js/storelist.js?v201401151857"></script>
+<title>搜索结果列表</title>
+</head>
+<body class="listBd slistBd">
+	<div class="title">我们目前共有${total}家书店:</div>
+	<div class="list" id="datalist">
+	</div>
+	<div class="load" id="laodmore"><img src="//img04.moulingtao.net/wssbsw/images/loading.gif"/><span>...</span></div>
+	<div class="foot">
+		<p>&copy;2014, all rights reserved</p>
+	</div>
+</body>
+<script>
+curPage=1;
+local_lon=${local_lon};
+local_lat=${local_lat};
+wechatId="${wechatId}";
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	WeixinJSBridge.call('showToolbar');
+});
+</script>
+</html>

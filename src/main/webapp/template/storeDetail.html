@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<#include "head.html"/>
+<title>书店信息</title>
+</head>
+<body class="storebd">
+	<div class="subject">
+		<div class="pic"><img src="${store.storePicture}"></div>
+		<div class="title">${store.storeName}</div>
+	</div>
+	<div class="detail">
+		<div class="det-panel">
+			<div class="title">分店信息<a href="http://mo.amap.com/?q=${store.storeLon},${store.storeLat}&name=${store.storeName}&tel=${store.storePhone}&dev=0&addr=${store.storePlace}">查看地图</a></div>
+			<div class="intro">
+				<p>分店名称: ${store.storeName}</p>
+				<p>所属地区: ${store.storeCity}</p>
+				<p>详细地址: ${store.storePlace}</p>
+				<p>联系电话: ${store.storePhone}</p>
+				<p>联系人名: ${store.storePeople}</p>
+				<p>店铺藏书: ${store.storeStock}万册</p>
+				<p>营业时间: 8:00-17:00 (节假日不休)</p>
+			</div>
+		</div>
+	</div>
+	<div class="foot">
+		<p>&copy;2014, all rights reserved</p>
+	</div>
+</body>
+<script>
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	WeixinJSBridge.call('showToolbar');
+});
+</script>
+</html>

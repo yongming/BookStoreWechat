@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<#include "head.html"/>
+<script type="text/javascript" src="//img03.moulingtao.net/wssbsw/js/booklist.js"></script>
+<title>图书搜索结果</title>
+</head>
+<body class="listBd blistBd">
+	<div class="title">共为您找到<span id="count"></span>本图书:</div>
+	<div class="list" id="datalist"></div>
+	<div class="load" id="laodmore"><img src="//img04.moulingtao.net/wssbsw/images/loading.gif"/><span>...</span></div>
+	<div class="foot">
+		<p>&copy;2014, all rights reserved</p>
+	</div>
+</body>
+<script>
+keyword="${keyword}";
+wechatId="${wechatId}";
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	WeixinJSBridge.call('showToolbar');
+});
+</script>
+</html>

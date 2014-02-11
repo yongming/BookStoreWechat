@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link href="http://img01.moulingtao.net/wssbsw/style/main.css" rel="stylesheet">
+<title>抽奖</title>
+<style type="text/css">
+    html{background-color:#298A00;}
+    .box{background-color: #FFF8B2;margin: 6px auto;border-radius: 5px;padding: 1px;width: 315px;}
+    .box .con{border:1px dashed #3B9600;border-radius: 5px;}
+    .box .tit{background:url('http://img01.moulingtao.net/wssbsw/images/titile_bg_t.png') no-repeat;height: 22px;line-height: 22px;padding-left: 5px;color: #fff;font-size: 12px;}
+    .box .bdy{padding: 5px;}
+    .box .bdy p{line-height: 150%;font-size: 12px;}
+	#lottery{overflow:hidden;position: absolute;}
+	#lotteryResult{width:203px;height:80px;font-size:20px;padding: 20px 50px;padding-bottom: 0;font-weight: bold;}
+</style>
+</head>
+<body>
+
+<div class="box" id='a'>
+	<div class="con">
+		<div class="tit">马上刮奖</div>
+		<div class="bdy">
+			<canvas id="lottery"></canvas>
+			<div id="lotteryResult"></div>
+		</div>
+	</div>
+</div>
+<div class="box">
+	<div class="con">
+		<div class="tit">奖项设置</div>
+		<div class="bdy">
+			<p>特等奖：Google Glass, 共1个</p>
+			<p>一等奖：iPhone 5S土豪金, 共3个</p>
+			<p>二等奖：iPad Air, 共10个</p>
+			<p>三等奖：pcDuino, 共50个</p>
+			<p>鼓励奖：七牛、DNSPod、阿里云等代金券</p>
+		</div>
+	</div>
+</div>
+<div class="box">
+	<div class="con">
+		<div class="tit">活动说明</div>
+		<div class="bdy">
+			<p>1、每位注册会员拥有无限次抽奖机会</p>
+			<p>2、用户在本页面刮开涂层试试手气进行抽奖</p>
+			<p>3、中奖者必须在活动结束之前在会员资料处完善信息，客服会主动与您取得联系。</p>
+			<p>4、阿里云代金券有550减80、1100减165、3000减450、4000减600、5000减750，默认随机发放，需要制定请联系客服。</p>
+			<p>5、本次活动最终解释权归顺顺书屋所有</p>
+		</div>
+	</div>
+</div>
+<script>
+var canvas = document.querySelector('#lottery'), ctx = canvas.getContext('2d');
+var result = ["恭喜你，你运气真差，你再试试吧~~~","听说用鼻子挂比较容易中奖~~~","据说在马桶上运气比较好~~~","恭喜中奖，奖你再来一次吧~~~","别试了，我们压根就没打算让你中奖~","别试了，洗洗睡吧，运气太差了你~"];
+var initDraw = function(){
+	ctx.fillStyle = 'gray';
+	ctx.beginPath();
+	ctx.fillRect(0, 0, 303, 100);
+	ctx.globalCompositeOperation = 'destination-out';
+	ctx.closePath();
+	var i = Math.round(Math.random()*9999)% result.length;
+	lotteryResult.innerText = result[i];
+}
+var offsetX = canvas.offsetLeft,offsetY = canvas.offsetTop;
+document.body.style.webkitUserSelect = 'none';
+initDraw();
+canvas.onmousemove = canvas.ontouchmove = function(e) {
+	e.preventDefault();
+	var x = (e.clientX + document.body.scrollLeft || e.pageX) - offsetX || 0,
+	y = (e.clientY + document.body.scrollTop || e.pageY) - offsetY || 0;
+	ctx.beginPath();
+	ctx.arc(x, y, 20, 0, Math.PI * 2);
+	ctx.closePath();
+	ctx.fill();
+};
+</script>
+</body>
+</html>

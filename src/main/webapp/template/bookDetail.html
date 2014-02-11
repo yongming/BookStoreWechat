@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<#include "head.html"/>
+<title>书详细信息</title>
+</head>
+<body class="bookbd">
+	<div class="subject">
+		<div class="pic"><img src="${book.largeImages}"></div>
+		<div class="title">${book.title}</div>
+		<div class="rating" id="box-rate" date-rate="${book.ratingAvg}"><span><i></i></span><strong></strong></div>
+		<div class="author">作者: ${book.author}</div>
+		<div class="publish">出版社: ${book.publisher}</div>
+	</div>
+	<div class="navs"><ul>
+		<li class="nav-btn cur" data-tar="intro">简介与目录</li>
+		<#if "<p></p>" != book.author_intro ><li class="nav-btn" data-tar="author">作者简介</li></#if>
+		<li class="nav-btn" data-tar="store">库存信息</li>
+	</ul></div>
+	<div class="detail">
+		<div id="det-intro" class="cur">
+			<div class="det-title">出版信息</div>
+			<div class="det-panel">
+				<#if "" != book.author ><p>作者: ${book.author}</p></#if>  
+				<#if "" != book.publisher ><p>出版社: ${book.publisher}</p></#if>  
+				<#if "" != book.translator ><p>翻译: ${book.translator}</p></#if>  
+				<#if "" != book.pubdate ><p>出版时间: ${book.pubdate}</p></#if>  
+				<#if "" != book.isbn13 ><p>ISBN: ${book.isbn13}</p></#if>  
+				<#if "" != book.pages ><p>页数: ${book.pages}</p></#if>  
+				<#if "" != book.price ><p>定价: ${book.price}元</p></#if>
+				<#if "" != book.binding ><p>装帧: ${book.binding}</p></#if>  
+			</div>
+			<#if "<p></p>" != book.summary >
+			<div class="det-title">内容简介</div>
+			<div class="det-panel">${book.summary}</div>
+			</#if>
+			<#if "<p></p>" != book.catalog >
+			<div class="det-title">图书目录</div>
+			<div class="det-panel">${book.catalog}</div>
+			</#if>
+		</div>
+		<div id="det-author">
+			<div class="det-panel">${book.author_intro}</div>
+		</div>
+		<div id="det-store">
+			<#if bookStock??>
+			<div class="det-title">离你最近的几家有库存的店铺</div>
+			<div class="det-title2">*数据来自您上次发送的位置消息</div>
+			<div class="det-panel det-store">
+				<#if bookStock.size()<=0>
+					真抱歉，您要找的书太限量了，我们全球五千家连锁书店都没货了。。。
+				<#else>
+					<#list bookStock as c>
+					<div class="sing storeData" data-id="${c.storeId}">
+						<strong>${c.storeName}</strong>
+						<i>与您相距: ${c.storeDist}米</i>
+						<i>实时库存: ${c.inStock}本</i>
+						<span>书店信息</span>
+					</div>
+					</#list>
+				</#if>
+			</div>
+			<#else>
+			<div class="det-title">对不起，请原谅我们的连锁书店太多，我们没有您的地理位置数据，无法为您匹配附近有库存的书店。<br>请在微信中发送地理位置消息给我们。</div>
+			</#if>
+		</div>
+	</div>
+	<div class="foot">
+		<p>&copy;2014, all rights reserved</p>
+	</div>
+</body>
+<script>
+$(document).ready(function(){
+	bookRate=parseFloat($("#box-rate").attr("date-rate"));
+	$("#box-rate>strong").text(bookRate+"分");
+	$("#box-rate>span>i").css("width",bookRate*8);
+	$(".nav-btn").click(function(){
+		if($(this).hasClass("cur")) return;
+		$(".navs .cur").removeClass("cur");
+		$(".detail .cur").removeClass("cur");
+		$(this).addClass("cur");
+		$("#det-"+$(this).attr("data-tar")).addClass("cur");
+	});
+	$(".storeData").click(function(){
+		var url="/store/detail/"+$(this).attr("data-id")+"?wechatId=${wechatId}";
+		window.location.href=url;
+	});
+});
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	WeixinJSBridge.call('showToolbar');
+});
+</script>
+</html>

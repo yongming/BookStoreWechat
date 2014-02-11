@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<#include "head.html"/>
+<title>编辑会员信息</title>
+</head>
+<body class="editUser">
+	<form method="post" method="?wechatId=${userData.userWechat?if_exists}">
+	<#if resultStr=="D">
+	<div class="tt">请填写会员信息</div>
+	<#elseif resultStr=="S">
+	<div class="tt succ">更新用户资料成功</div>
+	<#else>
+	<div class="tt warm">${resultStr}</div>
+	</#if>
+	<div class="fb">
+		<div class="sl">
+			<label>真实姓名:</label>
+			<input type="text" name="name" value="${userData.userName?if_exists}"/>
+		</div>
+		<div class="sl">
+			<label>手机号码:</label>
+			<input type="text" name="phone" value="${userData.userPhone?if_exists}" />
+		</div>
+	</div>
+	<div class="sb"><input type="submit" value="更新资料" /></div>
+	<input type="hidden" name="act" value="edit" />
+	</form>
+</body>
+<script>
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	WeixinJSBridge.call('showToolbar');
+});
+</script>
+</html>
